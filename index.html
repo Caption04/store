@@ -543,17 +543,95 @@
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
 
+            .admin-header,
+            .management-header,
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .admin-header > div,
+            .management-header > div {
+                width: 100%;
+            }
+
+            .admin-header .btn,
+            .management-header select,
+            .form-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
             .admin-stats {
                 grid-template-columns: 1fr 1fr;
             }
 
-            .product-table {
-                font-size: 0.9rem;
+            .product-management,
+            .add-product-form {
+                padding: 1rem;
             }
 
-            .product-table th,
+            .product-table,
+            .product-table tbody,
+            .product-table tr,
             .product-table td {
-                padding: 0.5rem;
+                display: block;
+                width: 100%;
+            }
+
+            .product-table thead {
+                display: none;
+            }
+
+            .product-table tr {
+                background: var(--white);
+                border: 1px solid #eee;
+                border-radius: var(--radius);
+                margin-bottom: 1rem;
+                padding: 0.25rem 0;
+                box-shadow: var(--shadow);
+            }
+
+            .product-table td {
+                border: none;
+                border-bottom: 1px solid #f1f3f5;
+                padding: 0.9rem 1rem;
+                text-align: left;
+            }
+
+            .product-table td:last-child {
+                border-bottom: none;
+            }
+
+            .product-table td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.78rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: var(--gray);
+                margin-bottom: 0.35rem;
+            }
+
+            .stock-controls {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .table-actions {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .table-actions .btn {
+                flex: 1 1 0;
+                justify-content: center;
+            }
+
+            #categoryList {
+                gap: 0.75rem;
             }
         }
 
@@ -564,6 +642,24 @@
 
             .admin-stats {
                 grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0.75rem;
+            }
+
+            .admin-header h1,
+            .management-header h2,
+            .form-title {
+                font-size: 1.15rem;
+            }
+
+            .product-table td {
+                padding: 0.85rem 0.85rem;
+            }
+
+            .table-actions {
+                flex-direction: column;
             }
         }
 
@@ -893,7 +989,7 @@
     <header class="header" id="mainHeader">
         <div class="logo">
             <i class="fas fa-store"></i>
-            <span>My Store</span>
+            <span>Zim Wear</span>
         </div>
         <div class="header-actions">
             <button class="btn btn-outline cart-btn" onclick="showCart()">
@@ -1100,10 +1196,10 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>My Store</h3>
+                <h3>Zim Wear</h3>
                 <p>Your trusted shop for everyday essentials, fashion, beauty, and electronics. Order quickly through WhatsApp and enjoy a smooth shopping experience.</p>
                 <div class="footer-social">
-                    <a href="https://wa.me/263772406949" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <a href="https://wa.me/263783346899" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                     <a href="#" onclick="showCart()" aria-label="Cart">
@@ -1119,18 +1215,18 @@
                 <ul>
                     <li><a href="#" onclick="showStore()">Browse Products</a></li>
                     <li><a href="#" onclick="showCart()">View Cart</a></li>
-                    <li><a href="https://wa.me/263772406949" target="_blank" rel="noopener noreferrer">Contact on WhatsApp</a></li>
+                    <li><a href="https://wa.me/263783346899" target="_blank" rel="noopener noreferrer">Contact on WhatsApp</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Contact</h3>
-                <p>WhatsApp: <a href="https://wa.me/263772406949" target="_blank" rel="noopener noreferrer">+263772406949</a></p>
+                <p>WhatsApp: <a href="https://wa.me/263783346899" target="_blank" rel="noopener noreferrer">+263783346899</a></p>
                 <p>Support hours: Monday to Saturday, 8:00 AM - 6:00 PM</p>
                 <p>Fast responses for orders, stock checks, and customer support.</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 My Store. All rights reserved. <span class="footer-admin-link" onclick="showLogin()">Admin Login</span></p>
+            <p>&copy; 2026 Zim Wear. All rights reserved. <span class="footer-admin-link" onclick="showLogin()">Admin Login</span></p>
         </div>
     </footer>
 
@@ -1177,8 +1273,8 @@
     <script>
         // Store Configuration
         const STORE_CONFIG = {
-            storeName: 'My Store',
-            phoneNumber: '+263772406949', // Replace with actual WhatsApp number
+            storeName: 'Zim Wear',
+            phoneNumber: '+263783346899', // Replace with actual WhatsApp number
             currency: '$'
         };
 
@@ -1193,9 +1289,11 @@
 
         // Default Categories
         const DEFAULT_CATEGORIES = [
-            'Electronics',
-            'Beauty',
-            'Clothing'
+            'TrackSuits',
+            'Tshirts',
+            'Hoodies',
+            'Caps & Hats',
+            'Dresses'
         ];
 
         // Sample Products
@@ -1653,26 +1751,27 @@
                 
                 return `
                     <tr>
-                        <td>
+                        <td data-label="Product">
                             <strong>${product.name}</strong>
                             ${product.image ? `<br><small style="color:var(--gray)">Has image</small>` : ''}
                         </td>
-                        <td>${product.category}</td>
-                        <td>${STORE_CONFIG.currency}${product.price.toFixed(2)}</td>
-                        <td>
+                        <td data-label="Category">${product.category}</td>
+                        <td data-label="Price">${STORE_CONFIG.currency}${product.price.toFixed(2)}</td>
+                        <td data-label="Stock">
                             <div class="stock-controls">
                                 <button class="stock-btn" onclick="updateStock(${product.id}, -1)">-</button>
                                 <span class="stock-value">${product.stock}</span>
                                 <button class="stock-btn" onclick="updateStock(${product.id}, 1)">+</button>
                             </div>
                         </td>
-                        <td>
+                        <td data-label="Status">
                             <button class="stock-toggle ${product.inStock ? 'toggle-in-stock' : 'toggle-out-of-stock'}" 
                                     onclick="toggleStockStatus(${product.id})">
                                 ${product.inStock ? 'In Stock' : 'Out of Stock'}
                             </button>
                         </td>
-                        <td>
+                        <td data-label="Actions">
+                            <div class="table-actions">
                             <button class="btn btn-outline" style="padding:0.4rem 0.8rem" onclick="toggleProductVisibility(${product.id})">
                                 <i class="fas fa-eye${product.hidden ? '-slash' : ''}"></i>
                             </button>
@@ -1682,6 +1781,7 @@
                             <button class="btn btn-outline" style="padding:0.4rem 0.8rem;color:#dc3545;border-color:#dc3545" onclick="deleteProduct(${product.id})">
                                 <i class="fas fa-trash"></i>
                             </button>
+                            </div>
                         </td>
                     </tr>
                 `;
