@@ -1705,8 +1705,10 @@
             if (!product) return;
             
             product.stock = Math.max(0, product.stock + change);
+            product.inStock = product.stock > 0;
             saveToStorage();
             renderAdminProducts();
+            renderStoreProducts();
             updateStats();
         }
 
