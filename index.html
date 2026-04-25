@@ -1205,7 +1205,7 @@
                     <a href="#" onclick="showCart()" aria-label="Cart">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
-                    <a href="#" onclick="showStore()" aria-label="Store Home">
+                    <a href="#" onclick="scrollToProductsSection(); return false;" aria-label="Store Home">
                         <i class="fas fa-store"></i>
                     </a>
                 </div>
@@ -1213,7 +1213,7 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#" onclick="showStore()">Browse Products</a></li>
+                    <li><a href="#" onclick="scrollToProductsSection(); return false;">Browse Products</a></li>
                     <li><a href="#" onclick="showCart()">View Cart</a></li>
                     <li><a href="https://wa.me/263783346899" target="_blank" rel="noopener noreferrer">Contact on WhatsApp</a></li>
                 </ul>
@@ -1226,7 +1226,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Zim Wear. All rights reserved. <span class="footer-admin-link" onclick="showLogin()">Admin Login</span></p>
+            <p>&copy; 2026 Zim Wear. All rights reserved. <span class="footer-admin-link" onclick="openAdminLogin(); return false;">Admin Login</span></p>
         </div>
     </footer>
 
@@ -1298,14 +1298,15 @@
 
         // Sample Products
         const DEFAULT_PRODUCTS = [
-            { id: 1, name: 'Wireless Earbuds', category: 'Electronics', price: 49.99, stock: 25, image: '', inStock: true, hidden: false },
-            { id: 2, name: 'Cotton T-Shirt', category: 'Clothing', price: 19.99, stock: 50, image: '', inStock: true, hidden: false },
-            { id: 3, name: 'Face Moisturizer', category: 'Beauty', price: 24.99, stock: 15, image: '', inStock: true, hidden: false },
-            { id: 4, name: 'Smart Watch', category: 'Electronics', price: 99.99, stock: 5, image: '', inStock: true, hidden: false },
-            { id: 5, name: 'Denim Jeans', category: 'Clothing', price: 39.99, stock: 30, image: '', inStock: true, hidden: false },
-            { id: 6, name: 'Lipstick Set', category: 'Beauty', price: 19.99, stock: 20, image: '', inStock: true, hidden: false },
-            { id: 7, name: 'Bluetooth Speaker', category: 'Electronics', price: 59.99, stock: 12, image: '', inStock: true, hidden: false },
-            { id: 8, name: 'Hoodie', category: 'Clothing', price: 44.99, stock: 18, image: '', inStock: true, hidden: false }
+            { id: 1, name: 'Zim Tracksuits', category: 'TrackSuits', price: 40.00, stock: 25, image: '', inStock: true, hidden: false },
+            { id: 2, name: 'African T-Shirts', category: 'Tshirts', price: 19.99, stock: 50, image: '', inStock: true, hidden: false },
+            { id: 3, name: 'Zim Flag T-shirt Dress', category: 'Dresses', price: 24.99, stock: 15, image: '', inStock: true, hidden: false },
+            { id: 4, name: 'Zim Hoodies', category: 'Hoodies', price: 99.99, stock: 5, image: '', inStock: true, hidden: false },
+            { id: 5, name: 'Zim Caps', category: 'Caps & Hats', price: 39.99, stock: 30, image: '', inStock: true, hidden: false }
+            // ,
+            // { id: 6, name: 'Lipstick Set', category: 'Beauty', price: 19.99, stock: 20, image: '', inStock: true, hidden: false },
+            // { id: 7, name: 'Bluetooth Speaker', category: 'Electronics', price: 59.99, stock: 12, image: '', inStock: true, hidden: false },
+            // { id: 8, name: 'Hoodie', category: 'Clothing', price: 44.99, stock: 18, image: '', inStock: true, hidden: false }
         ];
 
         // State
@@ -1448,6 +1449,28 @@
             document.getElementById('adminPanel').classList.remove('active');
             document.getElementById('cartView').classList.remove('active');
             isAdminView = false;
+        }
+
+        function smoothScrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToProductsSection() {
+            showStore();
+
+            requestAnimationFrame(() => {
+                const target = document.getElementById('categoryFilter') || document.getElementById('productGrid');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        function openAdminLogin() {
+            smoothScrollToTop();
+            setTimeout(() => {
+                showLogin();
+            }, 250);
         }
 
         // Toggle Password Visibility
