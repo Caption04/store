@@ -1193,7 +1193,7 @@
         </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" id="siteFooter">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Zim Wear</h3>
@@ -1343,6 +1343,12 @@
             localStorage.setItem('storeCategories', JSON.stringify(categories));
         }
 
+        function setFooterVisibility(isVisible) {
+            const footer = document.getElementById('siteFooter');
+            if (!footer) return;
+            footer.style.display = isVisible ? 'block' : 'none';
+        }
+
         // Reset Categories to defaults
         function resetCategories() {
             if (!confirm('Reset categories to defaults? This will clear stored categories.')) return;
@@ -1420,6 +1426,7 @@
             document.getElementById('storeView').classList.toggle('hidden', isAdminView);
             document.getElementById('adminPanel').classList.toggle('active', isAdminView);
             document.getElementById('cartView').classList.remove('active');
+            setFooterVisibility(!isAdminView);
             
             if (isAdminView) {
                 renderAdminProducts();
@@ -1436,6 +1443,7 @@
             document.getElementById('adminPanel').classList.remove('active');
             document.getElementById('cartView').classList.remove('active');
             document.getElementById('loginPage').classList.add('active');
+            setFooterVisibility(false);
             document.getElementById('loginError').classList.remove('show');
             document.getElementById('loginUsername').value = '';
             document.getElementById('loginPassword').value = '';
@@ -1448,6 +1456,7 @@
             document.getElementById('storeView').classList.remove('hidden');
             document.getElementById('adminPanel').classList.remove('active');
             document.getElementById('cartView').classList.remove('active');
+            setFooterVisibility(true);
             isAdminView = false;
         }
 
@@ -1467,10 +1476,8 @@
         }
 
         function openAdminLogin() {
-            smoothScrollToTop();
-            setTimeout(() => {
-                showLogin();
-            }, 250);
+            window.scrollTo(0, 0);
+            showLogin();
         }
 
         // Toggle Password Visibility
@@ -1518,6 +1525,7 @@
             document.getElementById('adminPanel').classList.remove('active');
             document.getElementById('loginPage').classList.remove('active');
             document.getElementById('cartView').classList.add('active');
+            setFooterVisibility(false);
             renderCart();
         }
 
@@ -1611,7 +1619,7 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('loginUsername').value;
+            const username = document.getElementById('loginUsername').value.trim();
             const password = document.getElementById('loginPassword').value;
             
             if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
@@ -1619,6 +1627,7 @@
                 document.getElementById('loginPage').classList.remove('active');
                 document.getElementById('mainHeader').style.display = 'flex';
                 document.getElementById('adminPanel').classList.add('active');
+                setFooterVisibility(false);
                 renderAdminProducts();
                 updateStats();
             } else {
