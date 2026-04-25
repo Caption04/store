@@ -797,6 +797,95 @@
             color: var(--gray);
             margin-bottom: 1rem;
         }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-section p {
+            color: #aaa;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .footer-admin-link {
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .footer-admin-link:hover {
+            color: var(--white);
+        }
     </style>
 </head>
 <body>
@@ -1007,6 +1096,43 @@
             </form>
         </div>
     </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>My Store</h3>
+                <p>Your trusted shop for everyday essentials, fashion, beauty, and electronics. Order quickly through WhatsApp and enjoy a smooth shopping experience.</p>
+                <div class="footer-social">
+                    <a href="https://wa.me/263772406949" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" onclick="showCart()" aria-label="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <a href="#" onclick="showStore()" aria-label="Store Home">
+                        <i class="fas fa-store"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" onclick="showStore()">Browse Products</a></li>
+                    <li><a href="#" onclick="showCart()">View Cart</a></li>
+                    <li><a href="https://wa.me/263772406949" target="_blank" rel="noopener noreferrer">Contact on WhatsApp</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>WhatsApp: <a href="https://wa.me/263772406949" target="_blank" rel="noopener noreferrer">+263772406949</a></p>
+                <p>Support hours: Monday to Saturday, 8:00 AM - 6:00 PM</p>
+                <p>Fast responses for orders, stock checks, and customer support.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 My Store. All rights reserved. <span class="footer-admin-link" onclick="showLogin()">Admin Login</span></p>
+        </div>
+    </footer>
 
     <!-- Edit Product Modal -->
     <div class="modal" id="editModal">
